@@ -1,0 +1,154 @@
+#biaoti {
+  font-size: 1.9rem;
+  line-height: 3rem;
+  text-align: center;
+  margin-bottom: 20rpx;
+
+}
+
+#zhuti_2 {
+  text-align: center;
+  margin-top: 20rpx;
+
+}
+
+#zhuti_2 ._span {
+  font-size: 46rpx;
+  vertical-align: baseline;
+  margin-left: 6rpx;
+}
+
+#zhuti_2 input {
+  border: none;
+  padding: 1rpx 0 0 0;
+  margin: 0rpx 6rpx 0 6rpx;
+  vertical-align: baseline;
+  font-size: 32rpx;
+  background: #f8f8f8;
+  color: #333333;
+  text-align: center;
+  min-width: 20%;
+}
+
+#zhuti_2 button {
+  border: 0;
+  padding: 0;
+  vertical-align: top;
+  font-size: 35rpx;
+  color: #efefef;
+}
+
+
+
+#zhuti_1 {
+  border: 2rpx solid #333333;
+  margin: 20rpx;
+  padding: 20rpx;
+  background: #f8f8f8;
+  min-height: 1000rpx;
+}
+
+
+#wenzhang {
+  margin-top: 20rpx;
+  font-size: 1.1rem;
+  text-align: justify;
+ 
+}
+.wenzhang_1{
+  background: linear-gradient(to right bottom, rgb(223, 63, 63), rgb(74, 194, 74), rgb(73, 73, 215), rgb(205, 77, 98), rgb(137, 137, 39));
+  -webkit-background-clip: text;
+  color: transparent;
+}
+.wenzhang_2{
+  background: linear-gradient(to left bottom, rgb(223, 63, 63), rgb(74, 194, 74), rgb(73, 73, 215), rgb(205, 77, 98), rgb(137, 137, 39));
+  -webkit-background-clip: text;
+  color: transparent;
+}
+.wenzhang_3{
+  background: linear-gradient(to right top, rgb(223, 63, 63),  rgb(73, 73, 215), rgb(205, 77, 98), rgb(137, 137, 39),rgb(74, 194, 74));
+  -webkit-background-clip: text;
+  color: transparent;
+}
+.wenzhang_4{
+  background: linear-gradient(to right top, rgb(73, 73, 215), rgb(223, 63, 63), rgb(74, 194, 74), rgb(205, 77, 98), rgb(137, 137, 39));
+  -webkit-background-clip: text;
+  color: transparent;
+}
+.wenzhang_5{
+  background: linear-gradient(to right top, rgb(205, 77, 98), rgb(223, 63, 63), rgb(74, 194, 74), rgb(73, 73, 215), rgb(137, 137, 39));
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.hr {
+  margin: 30rpx 0;
+  display: flex;
+    justify-content: center;
+}
+
+.hr:nth-last-child(1) {
+  padding-bottom: 20rpx;
+  border-bottom: 1rpx solid #ccc
+}
+
+.hr ._span {
+  background: linear-gradient(to right bottom, red, blue, yellow);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.input_zhuti {
+  border-radius: 10rpx;
+  outline: 2rpx solid #FEBF00;
+  border: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background-color: #e2e2e2;
+  outline-offset: 3rpx;
+  padding: 10rpx 1rem;
+  transition: 0.25s;
+}
+
+.input_zhuti:focus {
+  outline-offset: 5rpx;
+  background-color: #fff
+}
+
+#createBtn {
+  margin-left: 250rpx;
+  --width: 300rpx;
+  --timing: 2s;
+  border: 0;
+  width: var(--width);
+  padding-block: 1em;
+  color: #fff;
+  font-weight: bold;
+  font-size: 1em;
+  background: rgb(64, 192, 87);
+  transition: all 4s;
+  border-radius: 30rpx;
+}
+#fuzhi{
+  margin-right: 0;
+  --width: 300rpx;
+  --timing: 2s;
+  border: 0;
+  width: var(--width);
+  color: #fff;
+  font-weight: bold;
+  font-size: 1em;
+  background: rgb(64, 192, 87);
+  transition: all 4s;
+  border-radius: 30rpx;
+}
+#createBtn:active ,#fuzhi:active{
+  background-image: linear-gradient(to right, rgb(250, 82, 82), rgb(250, 82, 82) 16.65%, rgb(190, 75, 219) 16.65%, rgb(190, 75, 219) 33.3%, rgb(76, 110, 245) 33.3%, rgb(76, 110, 245) 49.95%, rgb(64, 192, 87) 49.95%, rgb(64, 192, 87) 66.6%, rgb(250, 176, 5) 66.6%, rgb(250, 176, 5) 83.25%, rgb(253, 126, 20) 83.25%, rgb(253, 126, 20) 100%, rgb(250, 82, 82) 100%);
+  animation: var(--timing) linear dance6123 infinite;
+  transform: scale(1.1) translateY(-1rpx);
+}
+
+@keyframes dance6123 {
+  to {
+    background-position: var(--width);
+  }
+}
