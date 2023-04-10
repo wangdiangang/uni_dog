@@ -240,19 +240,10 @@ export default {
       num: 1,
     };
   },
-  onShareAppMessage(res) {
-    return {
-      title: "狗屁不通文章生成器",
-      path: "/pages/index",
-    };
-  },
-  onShareTimeline(res) {
-    return {
-      title: "狗屁不通文章生成器",
-      path: "/pages/index",
-    };
-  },
   onLoad() {
+    uni.showShareMenu({
+       menus: ['shareAppMessage', 'shareTimeline']
+    })//可分享
     this.create();
   },
   methods: {
