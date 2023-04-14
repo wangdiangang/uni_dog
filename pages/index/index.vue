@@ -24,6 +24,8 @@
       </div>
       <div id="wenzhang" :class="wenzhang">{{ paiban }}</div>
       <button @click="fuzhi" id="fuzhi">复制内容</button>
+      <!-- <button @click="ceshi">测试按钮</button> -->
+      <!-- <div>{{ jieguo }}</div> -->
     </div>
   </view>
 </template>
@@ -173,7 +175,7 @@ let quotes = [
   "史美尔斯曾经说过，书籍把我们引入最美好的社会，使我们认识各个时代的伟大智者。这不禁令我深思",
   "冯学峰曾经说过，当一个人用工作去迎接光明，光明很快就会来照耀着他。这不禁令我深思",
   "吉格·金克拉曾经说过，如果你能做梦，你就能实现它。这不禁令我深思",
-  "福尔摩刚曾说:我发现，我最大的缺点就是缺点钱"
+  "福尔摩刚曾说:我发现，我最大的缺点就是缺点钱",
 ];
 
 let cushion = [
@@ -183,7 +185,7 @@ let cushion = [
   "我希望诸位也能好好地体会这句话。 ",
   "这句话语虽然很短，但令我浮想联翩。 ",
   "这似乎解答了我的疑惑。 ",
-  "这是一件值得让人深思的问题"
+  "这是一件值得让人深思的问题",
 ];
 
 let front = [
@@ -219,7 +221,8 @@ function take(最小值 = 0, 最大值 = 100, 随机数函数 = 同余发生器)
   return 数字;
 }
 
-function 来点名人名言() {
+function laidianmingyan() {
+  let quotes = this.quotesArr.length ? this.quotesArr : quotes;
   let 名言 = sentence(quotes);
   名言 = 名言.replace("曾经说过", sentence(front));
   名言 = 名言.replace("这不禁令我深思", sentence(cushion));
@@ -241,6 +244,8 @@ function 增加段落(段落) {
 export default {
   data() {
     return {
+      jieguo: "",
+      quotesArr: [],
       value: "初始化数据",
       number: 400,
       paiban: "",
@@ -250,18 +255,55 @@ export default {
   },
   onLoad() {
     uni.showShareMenu({
-       menus: ['shareAppMessage', 'shareTimeline']
-    })//可分享
-    this.create();
+      menus: ["shareAppMessage", "shareTimeline"],
+    }); //可分享
+    this.getQuotes();
+    // this.create();
   },
   methods: {
-    fuzhi() {
+    async ceshi() {
+      const getObjObject = uniCloud.importObject("getObjObject"); // 导入云对象
+      try {
+        const res = await getObjObject.getQuotes(); //导入云对象后就可以直接调用该对象的sum方法了，注意使用异步await
+        console.log("65789675", res); // 结果是3
+        // this.jieguo=res
+        let contents = res.map((item) => {
+          return item.content;
+        });
+        console.log(contents);
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    async getQuotes() {
+      const getObjObject = uniCloud.importObject("getObjObject"); // 导入云对象
+      try {
+        const res = await getObjObject.getQuotes(); //导入云对象后就可以直接调用该对象的sum方法了，注意使用异步await
+        let contents = res.map((item) => {
+          return item.content;
+        });
+        console.log(contents);
+        this.quotesArr = contents;
+        this.create();
+      } catch (e) {
+        console.log(e);
+        this.create();
+      }
+    },
+    async fuzhi() {
       uni.setClipboardData({
         data: this.paiban,
         success: function () {
           console.log("success");
         },
       });
+    },
+    laidianmingyan() {
+      let quotes = this.quotesArr.length ? this.quotesArr : quotes;
+      let 名言 = sentence(quotes);
+      名言 = 名言.replace("曾经说过", sentence(front));
+      名言 = 名言.replace("这不禁令我深思", sentence(cushion));
+      return 名言;
     },
     create() {
       this.wenzhang = "wenzhang_" + this.num;
@@ -280,7 +322,7 @@ export default {
           文章.push(段落);
           段落 = "";
         } else if (随机数 < 20) {
-          let 句子 = 来点名人名言();
+          let 句子 = this.laidianmingyan();
           文章长度 = 文章长度 + 句子.length;
           段落 = 段落 + 句子;
         } else {
