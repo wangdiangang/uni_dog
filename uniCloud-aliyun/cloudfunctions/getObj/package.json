@@ -1,5 +1,5 @@
 {
-  "name": "getObjObject",
+  "name": "getObj",
   "dependencies": {},
   "extensions": {
     "uni-cloud-jql": {}

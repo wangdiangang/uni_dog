@@ -24,8 +24,8 @@
       </div>
       <div id="wenzhang" :class="wenzhang">{{ paiban }}</div>
       <button @click="fuzhi" id="fuzhi">复制内容</button>
-      <!-- <button @click="ceshi">测试按钮</button> -->
-      <!-- <div>{{ jieguo }}</div> -->
+     <!-- <button @click="ceshi">测试按钮</button>
+      <div>{{ jieguo }}</div> -->
     </div>
   </view>
 </template>
@@ -221,13 +221,6 @@ function take(最小值 = 0, 最大值 = 100, 随机数函数 = 同余发生器)
   return 数字;
 }
 
-function laidianmingyan() {
-  let quotes = this.quotesArr.length ? this.quotesArr : quotes;
-  let 名言 = sentence(quotes);
-  名言 = 名言.replace("曾经说过", sentence(front));
-  名言 = 名言.replace("这不禁令我深思", sentence(cushion));
-  return 名言;
-}
 
 function 来点论述() {
   let 句子 = sentence(discuss);
@@ -257,39 +250,33 @@ export default {
     uni.showShareMenu({
       menus: ["shareAppMessage", "shareTimeline"],
     }); //可分享
-    this.getQuotes();
+	this.getQuotes()
     // this.create();
   },
   methods: {
     async ceshi() {
-      const getObjObject = uniCloud.importObject("getObjObject"); // 导入云对象
-      try {
-        const res = await getObjObject.getQuotes(); //导入云对象后就可以直接调用该对象的sum方法了，注意使用异步await
-        console.log("65789675", res); // 结果是3
-        // this.jieguo=res
-        let contents = res.map((item) => {
-          return item.content;
-        });
-        console.log(contents);
-      } catch (e) {
-        console.log(e);
-      }
+     uniCloud.callFunction({
+         name: 'getObj',
+         data: { a: 1 }
+       })
+       .then(res => {
+		   console.log('测试一下',res);
+		   // this.jieguo=res.result.msg
+	   });
     },
-    async getQuotes() {
-      const getObjObject = uniCloud.importObject("getObjObject"); // 导入云对象
-      try {
-        const res = await getObjObject.getQuotes(); //导入云对象后就可以直接调用该对象的sum方法了，注意使用异步await
-        let contents = res.map((item) => {
-          return item.content;
-        });
-        console.log(contents);
-        this.quotesArr = contents;
-        this.create();
-      } catch (e) {
-        console.log(e);
-        this.create();
-      }
-    },
+	async getQuotes(){
+		uniCloud.callFunction({
+		    name: 'getObj',
+		    data: { a: 1 }
+		  })
+		  .then(res => {
+				   // console.log('测试一下',res);
+				   // this.jieguo=res.result.msg
+				   let data=res.result.data.map(item=>item.content).flat(1)
+				   this.quotesArr=data
+				   this.create()
+		  });
+	},
     async fuzhi() {
       uni.setClipboardData({
         data: this.paiban,
