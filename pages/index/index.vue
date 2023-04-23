@@ -19,13 +19,14 @@
           />
         </div>
         <div class="hr">
-          <button id="createBtn" @click="msgSecCheck">生成</button>
+          <button id="createBtn" @click="msgSecCheck" v-if="!loading">生成</button>
+		   <button id="createBtn" v-else>生成</button>
         </div>
       </div>
       <div id="wenzhang" :class="wenzhang">{{ paiban }}</div>
-      <button @click="fuzhi" id="fuzhi">复制内容</button>
-     <!-- <button @click="ceshi">测试按钮</button>
-      <div>{{ jieguo }}</div> -->
+      <button @click="fuzhi" id="fuzhi" v-show="paiban">复制内容</button>
+     <!-- <button @click="ceshi">测试按钮</button> -->
+      <!-- <div>{{ jieguo }}</div> -->
     </div>
     <view>
 			<!-- 提示信息弹窗 -->
@@ -254,6 +255,7 @@ export default {
       openid:'',
 	  access_token:'',
 	  errorMsg:'',
+	  loading:false
     };
   },
   onLoad() {
@@ -302,6 +304,10 @@ export default {
 	   });
     },
     msgSecCheck(){//生成前的词语校验
+	this.loading=true
+       uni.showLoading({
+          title: '文本生成中...'
+        });
 		uniCloud.callFunction({
 		    name: 'msgSecCheck',
 		    data: {
@@ -319,11 +325,16 @@ export default {
 				console.log('涉及暴力信息');
 				this.errorMsg=`${this.value}涉及到敏感词汇`
 				this.$refs.message.open()
+				uni.hideLoading();
+				this.loading=false
 			}else{
 				console.log('没事了');
 				this.create()
 			}
-		  });
+		  }).catch(err=>{
+			  uni.hideLoading();
+			  this.loading=false
+		  })
 	},
     login(){
       const _this=this
@@ -394,6 +405,11 @@ export default {
 
       let paiban = 文章.join();
       this.paiban = paiban;
+	  setTimeout(()=>{
+		   uni.hideLoading();
+		  this.loading=false
+	  },1000)
+	  
     },
   },
 };
