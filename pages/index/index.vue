@@ -6,7 +6,7 @@
       <div id="zhuti_2">
         <div class="hr">
           <span>主题：</span>
-          <input type="text" class="input_zhuti" v-model="value" />
+          <input type="text" class="input_zhuti" v-model.trim="value" />
         </div>
         <div class="hr">
           <span>字数：</span>
@@ -15,11 +15,11 @@
             id="number"
             class="input_zhuti"
             value="400"
-            v-model="number"
+            v-model.trim="number"
           />
         </div>
         <div class="hr">
-          <button id="createBtn" @click="create">生成</button>
+          <button id="createBtn" @click="msgSecCheck">生成</button>
         </div>
       </div>
       <div id="wenzhang" :class="wenzhang">{{ paiban }}</div>
@@ -27,6 +27,12 @@
      <!-- <button @click="ceshi">测试按钮</button>
       <div>{{ jieguo }}</div> -->
     </div>
+    <view>
+			<!-- 提示信息弹窗 -->
+			<uni-popup ref="message" type="message">
+				<uni-popup-message type="error" :message="errorMsg" :duration="2000"></uni-popup-message>
+			</uni-popup>
+		</view>
   </view>
 </template>
 
@@ -244,17 +250,48 @@ export default {
       paiban: "",
       wenzhang: "wenzhang_1",
       num: 1,
+	  code:'',
+      openid:'',
+	  access_token:'',
+	  errorMsg:'',
     };
   },
   onLoad() {
     uni.showShareMenu({
       menus: ["shareAppMessage", "shareTimeline"],
     }); //可分享
+	this.login()
 	this.getQuotes()
     // this.create();
   },
   methods: {
     async ceshi() {
+		console.log(this.openid);
+		uniCloud.callFunction({
+		    name: 'msgSecCheck',
+		    data: {
+				code:this.code,
+				value:this.value.slice(0,50),
+				mm:this.openid,
+				access_token:this.access_token
+			}
+		  })
+		  .then(res => {
+			  this.openid=res.result.openid
+			  this.access_token=res.result.access_token
+			console.log('获取到了不',res);
+			if(res.result.label!=100){
+				this.errorMsg=`${this.value}涉及到敏感词汇`
+				this.$refs.message.open()
+				console.log('涉及暴力信息');
+			}else{
+				console.log('没事了');
+				
+			
+			}
+			
+		  });
+		return
      uniCloud.callFunction({
          name: 'getObj',
          data: { a: 1 }
@@ -264,15 +301,49 @@ export default {
 		   // this.jieguo=res.result.msg
 	   });
     },
+    msgSecCheck(){//生成前的词语校验
+		uniCloud.callFunction({
+		    name: 'msgSecCheck',
+		    data: {
+				code:this.code,
+				value:this.value.slice(0,50),
+				mm:this.openid,
+				access_token:this.access_token
+			}
+		  })
+		  .then(res => {
+			console.log('获取到了不',res);
+			this.openid=res.result.openid
+			this.access_token=res.result.access_token
+			if(res.result.label!=100){
+				console.log('涉及暴力信息');
+				this.errorMsg=`${this.value}涉及到敏感词汇`
+				this.$refs.message.open()
+			}else{
+				console.log('没事了');
+				this.create()
+			}
+		  });
+	},
+    login(){
+      const _this=this
+      uni.login({
+        provider: 'weixin', //使用微信登录
+        success: function (loginRes) {
+          console.log('登录情况',loginRes);
+			_this.code=loginRes.code
+
+			
+        }
+      });
+
+    },
 	async getQuotes(){
 		uniCloud.callFunction({
 		    name: 'getObj',
-		    data: { a: 1 }
 		  })
-		  .then(res => {
-				   // console.log('测试一下',res);
-				   // this.jieguo=res.result.msg
-				   let data=res.result.data.map(item=>item.content).flat(1)
+		  .then(res => {			
+        	   let data=res.result.data.map(item=>item.content).flat(1)
 				   this.quotesArr=data
 				   this.create()
 		  });
@@ -296,7 +367,7 @@ export default {
       this.wenzhang = "wenzhang_" + this.num;
       this.num += 1;
       if (this.num >= 5) this.num = 1;
-      主题 = this.value;
+      主题 = this.value.slice(0,50);
       let 文章 = [];
       let 段落 = "";
       let 文章长度 = 0;
