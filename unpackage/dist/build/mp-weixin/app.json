@@ -1,6 +1,10 @@
 {
   "pages": [
-    "pages/index/index"
+    "pages/index/index",
+    "pages/house/index",
+    "pages/house/result",
+    "pages/dog/index",
+    "pages/poetry/index"
   ],
   "subPackages": [],
   "window": {
