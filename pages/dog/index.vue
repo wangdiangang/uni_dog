@@ -408,7 +408,7 @@ export default {
 	  setTimeout(()=>{
 		   uni.hideLoading();
 		  this.loading=false
-	  },1000)
+	  },300)
 	  
     },
   },

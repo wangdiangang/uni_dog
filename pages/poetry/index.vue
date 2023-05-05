@@ -5,7 +5,7 @@
 			{{item}}
 		</span>
 	</div>
-	<button @click="generate" class="btn"></button>
+	<view @click="generate" class="btn"></view>
 	
   </div>
 </template>
@@ -50,7 +50,7 @@ export default {
 	.btn{
 		position: fixed;
 		right: 178rpx;
-		bottom: 154rpx;
+		bottom: 135rpx;
 		width: 100rpx;
 		height: 120rpx;
 		/* border: 1px solid red; */
