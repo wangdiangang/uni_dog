@@ -4,7 +4,8 @@
     "pages/house/index",
     "pages/house/result",
     "pages/dog/index",
-    "pages/poetry/index"
+    "pages/poetry/index",
+    "pages/slscq/index"
   ],
   "subPackages": [],
   "window": {

@@ -31,6 +31,12 @@
     <button @click="fuzhi" id="fuzhi" v-show="bodyContent.body">
       复制内容
     </button>
+	<view>
+			<!-- 提示信息弹窗 -->
+			<uni-popup ref="message" type="message">
+				<uni-popup-message type="error" :message="errorMsg" :duration="2000"></uni-popup-message>
+			</uni-popup>
+		</view>
     <!-- <rich-text :nodes="content" class="content"></rich-text> -->
   </div>
 </template>
@@ -119,7 +125,7 @@ export default {
       value: "",
       placeholder: "年轻人买房",
       essayNum: 500,
-
+		errorMsg:'',
       bodyContent: {
         title: "",
         begin: "",
@@ -138,9 +144,37 @@ export default {
 		  this.essayNum=val
 	  },
     create() {
-      const content = slscq(this.value || this.placeholder, this.essayNum);
-      //   console.log('content',content);
-      this.bodyContent = content;
+		uni.showLoading({
+		   title: '文本生成中...'
+		 });
+		 let access_token,mm
+			uni.getStorage({
+				key:'tokenOpenid',
+				success:res=>{
+					console.log('storage',res);
+					access_token=res.data.token;
+					mm=res.data.openid
+				uniCloud.callFunction({
+				    name: 'msgSecCheck',
+				    data: {
+						value:this.value.slice(0,50)||this.placeholder,
+						mm,
+						access_token:access_token
+					}
+				  }).then(res=>{
+					  console.log('res咋样了',res);
+					  if(res.result.label==100){
+						 this.bodyContent = slscq(this.value || this.placeholder, this.essayNum);
+						  
+					  }else{
+						 this.errorMsg=`${this.value}涉及到敏感词汇`
+						 this.$refs.message.open() 
+					  }
+					  uni.hideLoading();
+				  }).catch(err=>{
+					  uni.hideLoading();
+				  })
+				  }})
     },
     fuzhi() {
       let { title, begin, body, end } = this.bodyContent;

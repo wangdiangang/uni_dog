@@ -23,12 +23,25 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+      code:'',//临时登录code
+	  openid:'',
+	  token:''
+    };
   },
   onLoad() {
     uni.showShareMenu({
       menus: ["shareAppMessage", "shareTimeline"],
     }); //可分享
+    uni.checkSession({
+      success:(res)=>{
+        console.log('有效期',res);
+      },
+      fail:err=>{
+        console.log('过期',err);
+        this.login()
+      }
+    })
   },
   methods: {
     next(n) {
@@ -36,6 +49,35 @@ export default {
         url: `/pages/${n}/index`,
       });
     },
+    login(){
+      const _this=this
+      uni.login({
+        provider: 'weixin', //使用微信登录
+        success: function (loginRes) {
+          console.log('登录情况',loginRes);
+			  _this.code=loginRes.code
+			  uniCloud.callFunction({
+				name:'getOpenId',
+				data:{
+					code:loginRes.code
+				}
+			  }).then(res=>{
+				  console.log('code换取openid',res.result);
+				  let openid=res.result.openid
+				  let token=res.result.token
+				  _this.token=token
+				  _this.openid=openid
+				  uni.setStorage({
+				  	key: 'tokenOpenid',
+				  	data: {openid,token},
+				  	success: function () {
+				  		console.log('success');
+				  	}
+				  });
+			  })
+        }
+      });
+    }
   },
 };
 </script>

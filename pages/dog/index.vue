@@ -263,8 +263,7 @@ export default {
     uni.showShareMenu({
       menus: ["shareAppMessage", "shareTimeline"],
     }); //可分享
-	this.login()
-  console.log('login');
+	// this.login()
 	this.getQuotes()
   console.log('getQuotes');
     // this.create();
@@ -311,13 +310,19 @@ export default {
        uni.showLoading({
           title: '文本生成中...'
         });
+		let access_token,mm
+		uni.getStorage({
+			key:'tokenOpenid',
+			success:res=>{
+				access_token=res.data.token;
+				mm=res.data.openid
+		
 		uniCloud.callFunction({
 		    name: 'msgSecCheck',
 		    data: {
-				code:this.code,
 				value:this.value.slice(0,50),
-				mm:this.openid,
-				access_token:this.access_token
+				mm,
+				access_token:access_token
 			}
 		  })
 		  .then(res => {
@@ -338,6 +343,8 @@ export default {
 			  uni.hideLoading();
 			  this.loading=false
 		  })
+		  }
+		  })
 	},
     login(){
       const _this=this
@@ -345,7 +352,7 @@ export default {
         provider: 'weixin', //使用微信登录
         success: function (loginRes) {
           console.log('登录情况',loginRes);
-			_this.code=loginRes.code
+			  _this.code=loginRes.code
 
 			
         }
