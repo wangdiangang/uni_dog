@@ -10,6 +10,9 @@
       <view @click="next('poetry')" class="kuai box">
         <text>古诗拼接</text>
       </view>
+       <view @click="next('slscq')" class="kuai box">
+        <text>申论生成器</text>
+      </view>
       <view class="kuai box">
         <text>敬请期待....</text>
       </view>

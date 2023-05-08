@@ -12,15 +12,15 @@
 			"path": "pages/house/index",
 			"style": {
 				"navigationBarTitleText": "房贷计算器"
-				
 			}
-		},{
+		},
+		{
 			"path": "pages/house/result",
 			"style": {
 				"navigationBarTitleText": "房贷计算器"
-				
 			}
-		},{
+		},
+		{
 			"path": "pages/dog/index",
 			"style": {
 				"navigationBarTitleText": "狗屁不通文章生成器"
@@ -30,6 +30,12 @@
 			"path": "pages/poetry/index",
 			"style": {
 				"navigationBarTitleText": "古诗拼接器"
+			}
+		},
+		{
+			"path": "pages/slscq/index",
+			"style": {
+				"navigationBarTitleText":"申论生成器"
 			}
 		}
 	],

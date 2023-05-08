@@ -259,11 +259,14 @@ export default {
     };
   },
   onLoad() {
+    console.log('onload');
     uni.showShareMenu({
       menus: ["shareAppMessage", "shareTimeline"],
     }); //可分享
 	this.login()
+  console.log('login');
 	this.getQuotes()
+  console.log('getQuotes');
     // this.create();
   },
   methods: {
