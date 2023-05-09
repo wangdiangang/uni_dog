@@ -19,19 +19,25 @@
           />
         </div>
         <div class="hr">
-          <button id="createBtn" @click="msgSecCheck" v-if="!loading">生成</button>
-		   <button id="createBtn" v-else>生成</button>
+          <button id="createBtn" @click="msgSecCheck" v-if="!loading">
+            生成
+          </button>
+          <button id="createBtn" v-else>生成</button>
         </div>
       </div>
       <div id="wenzhang" :class="wenzhang">{{ paiban }}</div>
       <button @click="fuzhi" id="fuzhi" v-show="paiban">复制内容</button>
     </div>
     <view>
-			<!-- 提示信息弹窗 -->
-			<uni-popup ref="message" type="message">
-				<uni-popup-message type="error" :message="errorMsg" :duration="2000"></uni-popup-message>
-			</uni-popup>
-		</view>
+      <!-- 提示信息弹窗 -->
+      <uni-popup ref="message" type="message">
+        <uni-popup-message
+          type="error"
+          :message="errorMsg"
+          :duration="2000"
+        ></uni-popup-message>
+      </uni-popup>
+    </view>
   </view>
 </template>
 
@@ -226,7 +232,6 @@ function take(最小值 = 0, 最大值 = 100, 随机数函数 = 同余发生器)
   return 数字;
 }
 
-
 function 来点论述() {
   let 句子 = sentence(discuss);
   句子 = 句子.replace(RegExp("主题", "g"), 主题);
@@ -249,88 +254,103 @@ export default {
       paiban: "",
       wenzhang: "wenzhang_1",
       num: 1,
-	  code:'',
-      openid:'',
-	  access_token:'',
-	  errorMsg:'',
-	  loading:false
+      code: "",
+      openid: "",
+      access_token: "",
+      errorMsg: "",
+      loading: false,
     };
   },
   onLoad() {
-    console.log('onload');
+    console.log("onload");
     uni.showShareMenu({
       menus: ["shareAppMessage", "shareTimeline"],
     }); //可分享
-	// this.login()
-	this.getQuotes()
-  console.log('getQuotes');
-    // this.create();
+    // this.login()
+    this.getQuotes();
+    console.log("getQuotes");
   },
   methods: {
-    msgSecCheck(){//生成前的词语校验
-	this.loading=true
-       uni.showLoading({
-          title: '文本生成中...'
+    msgSecCheck() {
+      //生成前的词语校验
+      if (!this.loading) {
+        this.loading = true;
+        uni.showLoading({
+          title: "文本生成中...",
         });
-		let access_token,mm
-		uni.getStorage({
-			key:'tokenOpenid',
-			success:res=>{
-				let access_token=res.data.token;
-				let openid=res.data.openid
-		
-		uniCloud.callFunction({
-		    name: 'msgSecCheck_2',
-		    data: {
-				content:this.value.slice(0,50),
-				openid,
-				access_token
-			}
-		  })
-		  .then(res => {
-			console.log('获取到了不',res);
-			this.openid=res.result.openid
-			this.access_token=res.result.access_token
-			if(res.result.data.result.label!=100){
-				console.log('涉及暴力信息');
-				this.errorMsg=`${this.value}涉及到敏感词汇`
-				this.$refs.message.open()
-				uni.hideLoading();
-				this.loading=false
-			}else{
-				console.log('没事了');
-				this.create()
-			}
-		  }).catch(err=>{
-			  uni.hideLoading();
-			  this.loading=false
-		  })
-		  }
-		  })
-	},
-    login(){
-      const _this=this
-      uni.login({
-        provider: 'weixin', //使用微信登录
-        success: function (loginRes) {
-          console.log('登录情况',loginRes);
-			  _this.code=loginRes.code
+      }
 
-			
-        }
+      uni.getStorage({
+        key: "openid",
+        success: (res) => {
+          let openid = res.data.openid;
+          uni.getStorage({
+            key: "token",
+            success: (res) => {
+			console.log('准备走接口了');
+              let token = res.data.token;
+              uniCloud
+                .callFunction({
+                  name: "msgSecCheck_2",
+                  data: {
+                    content: this.value.slice(0, 50),
+                    openid,
+                    access_token: token,
+                  },
+                })
+                .then((res) => {
+                  console.log("获取到了不", res);
+                  if (res.result.data.result.label != 100) {
+                    console.log("涉及暴力信息");
+                    this.errorMsg = `${this.value}涉及到敏感词汇`;
+                    this.$refs.message.open();
+                    if (this.loading) {
+                      uni.hideLoading();
+                      this.loading = false;
+                    }
+                  } else {
+                    console.log("没事了");
+                    this.create();
+                  }
+                })
+                .catch((err) => {
+                  if (this.loading) {
+                    uni.hideLoading();
+                    this.loading = false;
+                  }
+                });
+            },
+          });
+        },
       });
-
     },
-	async getQuotes(){
-		uniCloud.callFunction({
-		    name: 'getObj',
-		  })
-		  .then(res => {			
-        	   let data=res.result.data.map(item=>item.content).flat(1)
-				   this.quotesArr=data
-				   this.create()
-		  });
-	},
+    login() {
+      const _this = this;
+      uni.login({
+        provider: "weixin", //使用微信登录
+        success: function (loginRes) {
+          console.log("登录情况", loginRes);
+          _this.code = loginRes.code;
+        },
+      });
+    },
+    async getQuotes() {
+		if(!this.loading){
+			uni.showLoading({
+				title:"文本生成中..."
+			})
+			this.loading=true
+		}
+      uniCloud
+        .callFunction({
+          name: "getObj",
+        })
+        .then((res) => {
+          let data = res.result.data.map((item) => item.content).flat(1);
+          this.quotesArr = data;
+          this.create();
+        });
+    },
     async fuzhi() {
       uni.setClipboardData({
         data: this.paiban,
@@ -350,7 +370,7 @@ export default {
       this.wenzhang = "wenzhang_" + this.num;
       this.num += 1;
       if (this.num >= 5) this.num = 1;
-      主题 = this.value.slice(0,50);
+      主题 = this.value.slice(0, 50);
       let 文章 = [];
       let 段落 = "";
       let 文章长度 = 0;
@@ -377,11 +397,12 @@ export default {
 
       let paiban = 文章.join();
       this.paiban = paiban;
-	  setTimeout(()=>{
-		   uni.hideLoading();
-		  this.loading=false
-	  },300)
-	  
+      setTimeout(() => {
+        if (this.loading) {
+          uni.hideLoading();
+          this.loading = false;
+        }
+      }, 300);
     },
   },
 };

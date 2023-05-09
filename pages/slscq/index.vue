@@ -131,6 +131,7 @@ export default {
         begin: "",
         body: "",
         end: "",
+		loading:false
       },
     };
   },
@@ -145,34 +146,51 @@ export default {
 		  this.essayNum=val
 	  },
     create() {
-		uni.showLoading({
-		   title: '文本生成中...'
-		 });
+		if(!this.loading){
+			uni.showLoading({
+			   title: '文本生成中...'
+			 });
+			 this.loading=true	
+			}
+		
 			uni.getStorage({
-				key:'tokenOpenid',
+				key:'openid',
 				success:res=>{
 					console.log('storage',res);
-					let access_token=res.data.token;
 					let openid=res.data.openid
-				uniCloud.callFunction({
-				    name: 'msgSecCheck_2',
-				    data: {
-						content:this.value.slice(0,50)||this.placeholder,
-						openid,
-						access_token:access_token
-					}
-				  }).then(res=>{
-					  console.log('res咋样了',res);
-					  if(res.result.data.result.label==100){
-						 this.bodyContent = slscq(this.value || this.placeholder, this.essayNum);
-					  }else{
-						 this.errorMsg=`${this.value}涉及到敏感词汇`
-						 this.$refs.message.open() 
-					  }
-					  uni.hideLoading();
-				  }).catch(err=>{
-					  uni.hideLoading();
-				  })
+					uni.getStorage({
+						key:"token",
+						success:res=>{
+							let token=res.data.token
+							uniCloud.callFunction({
+							    name: 'msgSecCheck_2',
+							    data: {
+									content:this.value.slice(0,50)||this.placeholder,
+									openid,
+									access_token:token
+								}
+							  }).then(res=>{
+								  console.log('res咋样了',res);
+								  if(res.result.data.result.label==100){
+									 this.bodyContent = slscq(this.value || this.placeholder, this.essayNum);
+								  }else{
+									 this.errorMsg=`${this.value}涉及到敏感词汇`
+									 this.$refs.message.open() 
+								  }
+								  if(this.loading){
+									  this.loading=false
+									  uni.hideLoading();
+								  }
+								  
+							  }).catch(err=>{
+								  if(this.loading){
+								  	this.loading=false
+								  	uni.hideLoading();
+								  }
+							  })
+						}
+					})
+				
 				  }})
     },
     fuzhi() {

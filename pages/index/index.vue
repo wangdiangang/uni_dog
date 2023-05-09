@@ -10,7 +10,7 @@
       <view @click="next('poetry')" class="kuai box">
         <text>古诗拼接</text>
       </view>
-       <view @click="next('slscq')" class="kuai box">
+      <view @click="next('slscq')" class="kuai box">
         <text>申论生成器</text>
       </view>
       <view class="kuai box">
@@ -24,76 +24,127 @@
 export default {
   data() {
     return {
-      code:'',//临时登录code
-	  openid:'',
-	  token:''
+      code: "", //临时登录code
+      openid: "",
+      token: "",
+      loading: false,
     };
   },
   onLoad() {
+ //    this.getToken();
+	// this.getOpenId()
+	
     uni.showShareMenu({
       menus: ["shareAppMessage", "shareTimeline"],
     }); //可分享
     uni.checkSession({
-      success:(res)=>{
-        console.log('有效期',res);
+      success: (res) => {
+        console.log("有效期", res);
 		uni.getStorage({
-			key:'tokenOpenid',
+			key:"token",
 			success:res=>{
+				let time=res.data.time
+				let endTime=Date.now()
+				if(endTime-time>7200000){
+					// token有效时间俩小时
+					this.getToken()
+				}
 			},
-			fail:e=>{
-				console.log('缓存没有获取到');
-				uni.showLoading({
-				   title: '登录中...'
-				 });
+			fail:()=> {
+				console.log('没有获取到token');
+				this.getToken()
+			}
+		})
+		uni.getStorage({
+			key:'openid',
+			fail:()=> {
+				console.log('没有获取到openid');
 				this.login()
 			}
 		})
       },
-      fail:err=>{
-        console.log('过期',err);
-		uni.showLoading({
-		   title: '登录中...'
-		 });
-        this.login()
-      }
-    })
+      fail: (err) => {
+        console.log("过期", err);
+        if (!this.loading) {
+          uni.showLoading({
+            title: "登录中...",
+          });
+          this.loading = true;
+          this.login();
+        }
+      },
+    });
   },
   methods: {
     next(n) {
+      if (this.loading) return;
       uni.navigateTo({
         url: `/pages/${n}/index`,
       });
     },
-    login(){
-      const _this=this
-      uni.login({
-        provider: 'weixin', //使用微信登录
-        success: function (loginRes) {
-          console.log('登录情况',loginRes);
-			  _this.code=loginRes.code
-			  uniCloud.callFunction({
-				name:'getOpenId',
+    getOpenId(code) {//获取openid
+      uniCloud
+        .callFunction({
+          name: "getOpenId",
+          data: {
+            code:code|| this.code,
+          },
+        })
+        .then((res) => {
+			// console.log('获取openid',res.result);
+			let openid=res.result.openid
+			uni.setStorage({
+				key:'openid',
 				data:{
-					code:loginRes.code
+					openid
 				}
-			  }).then(res=>{
-				  console.log('code换取openid',res.result);
-				  let openid=res.result.openid
-				  let token=res.result.token
-				  _this.token=token
-				  _this.openid=openid
-				  uni.setStorage({
-				  	key: 'tokenOpenid',
-				  	data: {openid,token},
-				  	success: function () {
-				  		console.log('success');
-						 uni.hideLoading();
-				  	}
-				  });
-			  })
-        }
+			})
+			if(this.loading){
+				this.loading=false
+				uni.hideLoading()
+			}
+		});
+    },
+    getToken() {
+      //获取token
+	  if(!this.loading){
+		  this.loading=true
+		  uni.showLoading({
+		  	title:"登录中..."
+		  })
+	  }
+      uniCloud
+        .callFunction({
+          name: "getToken",
+        })
+        .then((res) => {
+          // console.log("获取token", res);
+          let access_token = res.result.access_token;
+          uni.setStorage({
+            key: "token",
+            data: {
+              token: access_token,
+              time: Date.now(),
+            },
+          });
+        });
+		if(this.loading){
+			this.loading=false
+			uni.hideLoading()
+		}
+    },
+    login() {
+      const _this = this;
+      uni.login({
+        provider: "weixin", //使用微信登录
+        success: (loginRes) => {
+          console.log("登录情况", loginRes);
+          _this.code = loginRes.code;
+		  this.getOpenId(loginRes.code)
+		  this.getToken()
+        },
       });
-    }
+    },
   },
 };
 </script>
