@@ -123,7 +123,7 @@ export default {
   data() {
     return {
       value: "",
-      placeholder: "年轻人买房",
+      placeholder: "年轻人买什么房",
       essayNum: 500,
 		errorMsg:'',
       bodyContent: {
@@ -135,8 +135,9 @@ export default {
     };
   },
   onLoad() {
-    // console.log("data.json", data);
-    // console.log("--出来结果", slscq(this.value||this.placeholder));
+	  uni.showShareMenu({
+	    menus: ["shareAppMessage", "shareTimeline"],
+	  }); //可分享
     this.create(this.value || this.placeholder, this.essayNum);
   },
   methods: {
@@ -147,25 +148,23 @@ export default {
 		uni.showLoading({
 		   title: '文本生成中...'
 		 });
-		 let access_token,mm
 			uni.getStorage({
 				key:'tokenOpenid',
 				success:res=>{
 					console.log('storage',res);
-					access_token=res.data.token;
-					mm=res.data.openid
+					let access_token=res.data.token;
+					let openid=res.data.openid
 				uniCloud.callFunction({
-				    name: 'msgSecCheck',
+				    name: 'msgSecCheck_2',
 				    data: {
-						value:this.value.slice(0,50)||this.placeholder,
-						mm,
+						content:this.value.slice(0,50)||this.placeholder,
+						openid,
 						access_token:access_token
 					}
 				  }).then(res=>{
 					  console.log('res咋样了',res);
-					  if(res.result.label==100){
+					  if(res.result.data.result.label==100){
 						 this.bodyContent = slscq(this.value || this.placeholder, this.essayNum);
-						  
 					  }else{
 						 this.errorMsg=`${this.value}涉及到敏感词汇`
 						 this.$refs.message.open() 

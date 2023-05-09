@@ -25,8 +25,6 @@
       </div>
       <div id="wenzhang" :class="wenzhang">{{ paiban }}</div>
       <button @click="fuzhi" id="fuzhi" v-show="paiban">复制内容</button>
-     <!-- <button @click="ceshi">测试按钮</button> -->
-      <!-- <div>{{ jieguo }}</div> -->
     </div>
     <view>
 			<!-- 提示信息弹窗 -->
@@ -269,42 +267,6 @@ export default {
     // this.create();
   },
   methods: {
-    async ceshi() {
-		console.log(this.openid);
-		uniCloud.callFunction({
-		    name: 'msgSecCheck',
-		    data: {
-				code:this.code,
-				value:this.value.slice(0,50),
-				mm:this.openid,
-				access_token:this.access_token
-			}
-		  })
-		  .then(res => {
-			  this.openid=res.result.openid
-			  this.access_token=res.result.access_token
-			console.log('获取到了不',res);
-			if(res.result.label!=100){
-				this.errorMsg=`${this.value}涉及到敏感词汇`
-				this.$refs.message.open()
-				console.log('涉及暴力信息');
-			}else{
-				console.log('没事了');
-				
-			
-			}
-			
-		  });
-		return
-     uniCloud.callFunction({
-         name: 'getObj',
-         data: { a: 1 }
-       })
-       .then(res => {
-		   console.log('测试一下',res);
-		   // this.jieguo=res.result.msg
-	   });
-    },
     msgSecCheck(){//生成前的词语校验
 	this.loading=true
        uni.showLoading({
@@ -314,22 +276,22 @@ export default {
 		uni.getStorage({
 			key:'tokenOpenid',
 			success:res=>{
-				access_token=res.data.token;
-				mm=res.data.openid
+				let access_token=res.data.token;
+				let openid=res.data.openid
 		
 		uniCloud.callFunction({
-		    name: 'msgSecCheck',
+		    name: 'msgSecCheck_2',
 		    data: {
-				value:this.value.slice(0,50),
-				mm,
-				access_token:access_token
+				content:this.value.slice(0,50),
+				openid,
+				access_token
 			}
 		  })
 		  .then(res => {
 			console.log('获取到了不',res);
 			this.openid=res.result.openid
 			this.access_token=res.result.access_token
-			if(res.result.label!=100){
+			if(res.result.data.result.label!=100){
 				console.log('涉及暴力信息');
 				this.errorMsg=`${this.value}涉及到敏感词汇`
 				this.$refs.message.open()

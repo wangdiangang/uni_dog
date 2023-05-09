@@ -36,9 +36,24 @@ export default {
     uni.checkSession({
       success:(res)=>{
         console.log('有效期',res);
+		uni.getStorage({
+			key:'tokenOpenid',
+			success:res=>{
+			},
+			fail:e=>{
+				console.log('缓存没有获取到');
+				uni.showLoading({
+				   title: '登录中...'
+				 });
+				this.login()
+			}
+		})
       },
       fail:err=>{
         console.log('过期',err);
+		uni.showLoading({
+		   title: '登录中...'
+		 });
         this.login()
       }
     })
@@ -72,6 +87,7 @@ export default {
 				  	data: {openid,token},
 				  	success: function () {
 				  		console.log('success');
+						 uni.hideLoading();
 				  	}
 				  });
 			  })
