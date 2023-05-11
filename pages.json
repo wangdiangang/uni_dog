@@ -37,12 +37,20 @@
 			"style": {
 				"navigationBarTitleText":"申论生成器"
 			}
-		},
+		}
+		
+	],
+	"subPackages": [
 		{
-			"path": "pages/idcard/index",
-			"style": {
-				"navigationBarTitleText": "身份证号码归属地查询"
-			}
+			"root": "pagesA",
+			"pages": [
+				{
+					"path": "idcard/index",
+					"style": {
+						"navigationBarTitleText": "身份证号码归属地查询"
+					}
+				}
+			]
 		}
 	],
 	"globalStyle": {

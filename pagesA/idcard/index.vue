@@ -32,7 +32,7 @@
 	export default{
 		data(){
 			return{
-				idNumber:'130433199309013117',
+				idNumber:'',
 				placeholder:'请输入身份证号',
 				error:false,
 				address:'',

@@ -13,7 +13,7 @@
       <view @click="next('slscq')" class="kuai box">
         <text>申论生成器</text>
       </view>
-	  <view @click="next('idcard')" class="kuai box">
+	  <view @click="next('idcard','pagesA')" class="kuai box">
 	    <text>身份证归属地</text>
 	  </view>
       <view class="kuai box">
@@ -81,10 +81,10 @@ export default {
     });
   },
   methods: {
-    next(n) {
+    next(n,page) {
       if (this.loading) return;
       uni.navigateTo({
-        url: `/pages/${n}/index`,
+        url: `/${page?'pagesA':'pages'}/${n}/index`,
       });
     },
     getOpenId(code) {//获取openid
