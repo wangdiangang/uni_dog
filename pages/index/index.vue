@@ -13,6 +13,9 @@
       <view @click="next('slscq')" class="kuai box">
         <text>申论生成器</text>
       </view>
+	  <view @click="next('idcard')" class="kuai box">
+	    <text>身份证归属地</text>
+	  </view>
       <view class="kuai box">
         <text>敬请期待....</text>
       </view>
@@ -43,9 +46,11 @@ export default {
 		uni.getStorage({
 			key:"token",
 			success:res=>{
+				
 				let time=res.data.time
 				let endTime=Date.now()
-				if(endTime-time>7200000){
+				console.log('获取token',res,endTime);
+				if(endTime-time>7000000){
 					// token有效时间俩小时
 					this.getToken()
 				}

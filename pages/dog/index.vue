@@ -266,9 +266,7 @@ export default {
     uni.showShareMenu({
       menus: ["shareAppMessage", "shareTimeline"],
     }); //可分享
-    // this.login()
     this.getQuotes();
-    console.log("getQuotes");
   },
   methods: {
     msgSecCheck() {
@@ -321,16 +319,6 @@ export default {
                 });
             },
           });
-        },
-      });
-    },
-    login() {
-      const _this = this;
-      uni.login({
-        provider: "weixin", //使用微信登录
-        success: function (loginRes) {
-          console.log("登录情况", loginRes);
-          _this.code = loginRes.code;
         },
       });
     },
