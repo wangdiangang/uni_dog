@@ -6,7 +6,8 @@
 			<i v-show='error'>*身份证号码输入不正确</i>
 			<button @click="query" class="btn">查询</button>
 		</div>
-		<div class="conten" v-show='address'>
+		<div v-if='errorContent' class="error_content">查询不到归属地</div>
+		<div class="conten" v-show='address&&!errorContent'>
 			<div>
 				<span>归属地：</span>
 				<span>{{address}}</span>
@@ -32,6 +33,7 @@
 	export default{
 		data(){
 			return{
+				errorContent:false,
 				idNumber:'',
 				placeholder:'请输入身份证号',
 				error:false,
@@ -50,9 +52,10 @@
 						return
 					}
 				
-				console.log(citysJson);
+				
 				this.error=false
 				let data=citysJson
+				console.log(citysJson);
 				let idNumber=this.idNumber
 						let provincialCode=idNumber.slice(0,2)
 				        let cityCode =idNumber.slice(2,4)
@@ -63,18 +66,31 @@
 				       let provincial= data.find(item=>{
 				            return item.code==provincialCode
 				        })
+						if(!provincial){
+							this.errorContent=true
+							return false
+						}
 				        let provincialName=provincial.val
 				        let city=provincial.citys.find(item=>item.code==cityCode)
+						if(!city){
+							this.errorContent=true
+							return false
+						}
 				        let cityName=city.val
 				        let countyName
 				        if(city.citys){
 				        let county=city.citys.find(item=>item.code==countyCode)
+						if(!county){
+							this.errorContent=true
+							return false
+						}
 				        countyName=county.val 
 				        }else{
 				            countyName=''
 				        }
 						let date=new Date().getFullYear()
 				        console.log(provincialName,cityName,countyName,birthCode,genderCode);
+						this.errorContent=false
 						this.address=provincialName+'-'+cityName+(countyName?'-'+countyName:countyName)
 						this.birth=birthCode.replace(/^(\d{4})(\d{2})(\d{2})$/, "$1-$2-$3")
 						this.gender=genderCode%2?"男":"女"
@@ -158,5 +174,11 @@
 	}
 	.conten div:nth-of-type(1) span:nth-of-type(2){
 			margin-left: 0;
+	}
+	.error_content{
+		text-align: center;
+		color: red;
+		font-size: 80rpx;
+		    margin-top: 80rpx;
 	}
 </style>
