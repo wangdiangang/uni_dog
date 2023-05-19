@@ -7,38 +7,7 @@
 				"navigationBarTitleText": "首页",
 				"navigationStyle": "custom" // 关键点
 			}
-		},
-		{
-			"path": "pages/house/index",
-			"style": {
-				"navigationBarTitleText": "房贷计算器"
-			}
-		},
-		{
-			"path": "pages/house/result",
-			"style": {
-				"navigationBarTitleText": "房贷计算器"
-			}
-		},
-		{
-			"path": "pages/dog/index",
-			"style": {
-				"navigationBarTitleText": "狗屁不通文章生成器"
-			}
-		},
-		{
-			"path": "pages/poetry/index",
-			"style": {
-				"navigationBarTitleText": "古诗拼接器"
-			}
-		},
-		{
-			"path": "pages/slscq/index",
-			"style": {
-				"navigationBarTitleText":"申论生成器"
-			}
 		}
-		
 	],
 	"subPackages": [
 		{
@@ -48,6 +17,37 @@
 					"path": "idcard/index",
 					"style": {
 						"navigationBarTitleText": "身份证号码归属地查询"
+					}
+				},
+				{
+					"path": "house/index",
+					"style": {
+						"navigationBarTitleText": "房贷计算器"
+					}
+				},
+				{
+					"path": "house/result",
+					"style": {
+						"navigationBarTitleText": "房贷计算器"
+					}
+				},
+				
+				{
+					"path": "poetry/index",
+					"style": {
+						"navigationBarTitleText": "古诗拼接器"
+					}
+				},
+				{
+					"path": "dog/index",
+					"style": {
+						"navigationBarTitleText": "狗屁不通文章生成器"
+					}
+				},
+				{
+					"path": "slscq/index",
+					"style": {
+						"navigationBarTitleText":"申论生成器"
 					}
 				}
 			]

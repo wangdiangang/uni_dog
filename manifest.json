@@ -55,7 +55,12 @@
             "urlCheck" : false
         },
         "cloudfunctionRoot" : "./cloudfunctions/",
-        "usingComponents" : true
+        "usingComponents" : true,
+        "permission" : {
+            "scope.userLocation" : {
+                "desc" : "获取当前位置以显示当前天气情况"
+            }
+        }
     },
     "mp-alipay" : {
         "usingComponents" : true

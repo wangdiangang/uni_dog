@@ -253,7 +253,7 @@ export default {
 				}
 				console.log(datas);
 				uni.navigateTo({
-					url:'/pages/house/result?title=商业贷款&datas='+JSON.stringify(datas)
+					url:'/pagesA/house/result?title=商业贷款&datas='+JSON.stringify(datas)
 				})
 			}
 			if (this.TabCur == 1) {
@@ -281,13 +281,13 @@ export default {
 				}
 				console.log(this.TabCur,datas);
 				uni.navigateTo({
-					url:'/pages/house/result?title=公积金贷款&datas='+JSON.stringify(datas)
+					url:'/pagesA/house/result?title=公积金贷款&datas='+JSON.stringify(datas)
 				})
 			}
 		
 			if (this.TabCur == 2) {//组合
 				uni.navigateTo({
-					url:'/pages/house/result?title=组合贷款&datas='+JSON.stringify(datas)
+					url:'/pagesA/house/result?title=组合贷款&datas='+JSON.stringify(datas)
 				})
 			}
 		}
