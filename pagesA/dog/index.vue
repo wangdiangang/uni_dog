@@ -18,6 +18,7 @@
             v-model.trim="number"
           />
         </div>
+		
         <div class="hr">
           <button id="createBtn" @click="msgSecCheck" v-if="!loading">
             生成
@@ -25,6 +26,7 @@
           <button id="createBtn" v-else>生成</button>
         </div>
       </div>
+	  <span style="font-size: 20rpx;color: red;">* 偶尔有时候不能用，不知道为啥，也不想解决了。。。</span>
       <div id="wenzhang" :class="wenzhang">{{ paiban }}</div>
       <button @click="fuzhi" id="fuzhi" v-show="paiban">复制内容</button>
     </div>
