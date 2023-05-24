@@ -256,15 +256,8 @@ h3{
 .create_num .num_box {
   margin-left: 20rpx;
 }
-.btn {
-  width: 300rpx;
-  height: 100rpx;
-  background: rgb(64, 192, 87);
-  color: #fff;
-  border-radius: 33rpx;
-  line-height: 100rpx;
-  font-size: 50rpx;
-}
+
+
 .line {
   width: 96%;
   border: 0.5rpx solid #f9f3f3;

@@ -39,6 +39,9 @@
 	  <view @click="next('idcard')" class="kuai box">
 	    <text>身份证归属地</text>
 	  </view>
+	  <view @click="next('yanbian')" class="kuai box">
+	    <text>知识搅拌机</text>
+	  </view>
       <view class="kuai box">
         <text>敬请期待....</text>
       </view>
