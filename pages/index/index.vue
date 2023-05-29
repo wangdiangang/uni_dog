@@ -42,6 +42,9 @@
 	  <view @click="next('yanbian')" class="kuai box">
 	    <text>知识搅拌机</text>
 	  </view>
+	  <view @click="next('charge')" class="kuai box">
+	    <text>充电增值</text>
+	  </view>
       <view class="kuai box">
         <text>敬请期待....</text>
       </view>

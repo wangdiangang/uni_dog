@@ -55,6 +55,12 @@
 					"style": {
 						"navigationBarTitleText":"延边刺客知识搅拌机"
 					}
+				},
+				{
+					"path": "charge/index",
+					"style": {
+						"navigationBarTitleText":""
+					}
 				}
 			]
 		}
