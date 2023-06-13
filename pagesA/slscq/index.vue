@@ -124,7 +124,7 @@ export default {
   data() {
     return {
       value: "",
-      placeholder: "年轻人买什么房",
+      placeholder: "AI对未来社会的影响",
       essayNum: 500,
 		errorMsg:'',
       bodyContent: {
@@ -172,17 +172,19 @@ export default {
 								}
 							  }).then(res=>{
 								  console.log('res咋样了',res);
+								  this.bodyContent = slscq(this.value || this.placeholder, this.essayNum);
+								  
 								  if(res.result.data.result.label==100){
-									 this.bodyContent = slscq(this.value || this.placeholder, this.essayNum);
+									 // this.bodyContent = slscq(this.value || this.placeholder, this.essayNum);
 								  }else{
 									 this.errorMsg=`${this.value}涉及到敏感词汇`
 									 this.$refs.message.open() 
+									 return
 								  }
 								  if(this.loading){
 									  this.loading=false
 									  uni.hideLoading();
 								  }
-								  
 							  }).catch(err=>{
 								  if(this.loading){
 								  	this.loading=false

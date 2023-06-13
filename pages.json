@@ -61,6 +61,12 @@
 					"style": {
 						"navigationBarTitleText":""
 					}
+				},
+				{
+					"path": "ticket/index",
+					"style": {
+						"navigationBarTitleText":"彩票摇号"
+					}
 				}
 			]
 		}

@@ -310,13 +310,15 @@ export default {
                     }
                   } else {
                     console.log("没事了");
-                    this.create();
+                   
                   }
+				   this.create();
                 })
                 .catch((err) => {
                   if (this.loading) {
                     uni.hideLoading();
                     this.loading = false;
+					 this.create();
                   }
                 });
             },
