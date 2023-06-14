@@ -1,7 +1,7 @@
 <template>
 	<div class="ticket">
 		<div class="two">
-			<h3>双色球</h3>
+	<h3>随机数</h3>
 			<div class="qiu" v-if="show">
 				<span  class="span" v-for="i in 6" :key="i">
 					<span class="q_span"  :style="[transform]">
@@ -33,7 +33,7 @@
 		</div>
 		<div class="line"></div>
 		<div class="big">
-			<h3>大乐透</h3>
+			<h3>随机数</h3>
 			<div class="qiu" v-if='bigShow'>
 				<span  class="span" v-for="i in winBigArr" :key="i">
 					<span class="q_span"  :style="[bigTransform]">

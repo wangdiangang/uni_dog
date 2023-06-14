@@ -46,7 +46,7 @@
 	    <text>充电增值</text>
 	  </view>
 	  <view @click="next('ticket')" class="kuai box">
-	    <text>彩票摇号</text>
+	    <text>随机数</text>
 	  </view>
       <view class="kuai box">
         <text>敬请期待....</text>
