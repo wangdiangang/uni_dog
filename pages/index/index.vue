@@ -1,8 +1,6 @@
 <template>
   <view class="body">
-	  <view class="adContainer">
-	    <ad unit-id="adunit-e335c42aee7836ee"></ad>
-	  </view>
+	 
 	  <filp></filp>
 	  <div class="content">
 	  <!-- <div class="tianqi" v-show="tianqiData.city">
@@ -40,6 +38,9 @@
       <view @click="next('slscq')" class="kuai box">
         <text>申论生成器</text>
       </view>
+       <view class="adContainer">
+	    <ad unit-id="adunit-e335c42aee7836ee"></ad>
+	  </view>
 	  <view @click="next('idcard')" class="kuai box">
 	    <text>身份证归属地</text>
 	  </view>
@@ -51,6 +52,9 @@
 	  </view>
 	  <view @click="next('ticket')" class="kuai box">
 	    <text>随机数</text>
+	  </view>
+    <view @click="next('muyu')" class="kuai box">
+	    <text>功德箱</text>
 	  </view>
       <view class="kuai box">
         <text>敬请期待....</text>
@@ -240,7 +244,7 @@ export default {
 <style>
 	.adContainer {
 	  width: 100%;
-	  position: fixed;
+	  /* position: fixed; */
 		bottom: 0;
 		  }
 	.tianqi{

@@ -67,6 +67,11 @@
 					"style": {
 						"navigationBarTitleText":"随机数"
 					}
+				},{
+					"path": "muyu/index",
+					"style": {
+						"navigationBarTitleText":"功德箱"
+					}
 				}
 			]
 		}
