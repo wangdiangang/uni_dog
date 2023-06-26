@@ -132,7 +132,7 @@ export default {
         begin: "",
         body: "",
         end: "",
-		loading:false
+		loading:false,
       },
     };
   },
@@ -141,8 +141,10 @@ export default {
 	    menus: ["shareAppMessage", "shareTimeline"],
 	  }); //可分享
     this.create(this.value || this.placeholder, this.essayNum);
+	
   },
   methods: {
+
 	  changeNum(val){
 		  this.essayNum=val
 	  },
