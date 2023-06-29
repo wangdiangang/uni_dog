@@ -53,6 +53,9 @@
 	  <view @click="next('ticket')" class="kuai box">
 	    <text>随机数</text>
 	  </view>
+	  <view @click="next('stjdb')" class="kuai box">
+	    <text>石头剪刀布</text>
+	  </view>
     <view @click="next('muyu')" class="kuai box">
 	    <text>功德箱</text>
 	  </view>
@@ -60,6 +63,7 @@
         <text>敬请期待....</text>
       </view>
     </view>
+	
 	</div>
   </view>
 </template>

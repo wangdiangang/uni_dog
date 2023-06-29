@@ -72,6 +72,11 @@
 					"style": {
 						"navigationBarTitleText":"功德箱"
 					}
+				},{
+					"path": "stjdb/index",
+					"style": {
+						"navigationBarTitleText":"石头剪刀布"
+					}
 				}
 			]
 		}

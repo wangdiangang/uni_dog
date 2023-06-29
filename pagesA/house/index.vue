@@ -163,6 +163,8 @@
 			</form>
 		</view>
 		<button type="primary" class="margin-top btn" style="width: 90%;" @click="calculate">开始计算</button>
+		<ad unit-id="adunit-30f5f332b815bb63" ad-type="video" ad-theme="white"></ad>
+		
 	</view>
 </template>
 
