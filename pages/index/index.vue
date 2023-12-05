@@ -21,6 +21,12 @@
 				<view @click="next('dog')" class="kuai box">
 					<text>文章生成器</text>
 				</view>
+				<view @click="next('zhichang','B')" class="kuai box">
+					<text>职场人日历</text>
+				</view>
+				<view @click="next('muoyu','B')" class="kuai box">
+					<text>摸鱼人日历</text>
+				</view>
 				<view @click="next('house')" class="kuai box">
 					<text>房贷计算器</text>
 				</view>
@@ -134,7 +140,7 @@
 						name: "getTianqi",
 						data: {},
 					}).then(res => {
-						console.log('天气情况', res.result.success)
+						console.log('天气情况', res.result)
 						if (res.result.success) {
 							let data = res.result.info
 							this.tianqiData.city = res.result.city

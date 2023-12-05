@@ -88,6 +88,18 @@
 					"style": {
 						"navigationBarTitleText":"每日小笑话"
 					}
+				},
+				{
+					"path": "zhichang/index",
+					"style": {
+						"navigationBarTitleText":"职场人日历"
+					}
+				},
+				{
+					"path": "muoyu/index",
+					"style": {
+						"navigationBarTitleText":"摸鱼人日历"
+					}
 				}
 			]
 		}
