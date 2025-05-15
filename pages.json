@@ -84,6 +84,12 @@
 			"root": "pagesB",
 			"pages": [
 				{
+					"path": "chat/index",
+					"style": {
+						"navigationBarTitleText":"AI问答"
+					}
+				},
+				{
 					"path": "haha/index",
 					"style": {
 						"navigationBarTitleText":"每日小笑话"

@@ -84,9 +84,9 @@
 		onLoad() {
 			//定时器开始
 			this.timerstar();
-			  uni.showShareMenu({
-				    menus: ["shareAppMessage", "shareTimeline"],
-				  }); //可分享
+			//   uni.showShareMenu({
+			// 	    menus: ["shareAppMessage", "shareTimeline"],
+			// 	  }); //可分享
 		},
 		methods: {
 

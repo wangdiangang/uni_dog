@@ -22,7 +22,7 @@
     </div>
     <button @click="create" class="btn">生成</button>
     <div class="line"></div>
-	<span style="font-size: 20rpx;color: red;">* 偶尔有时候不能用，不知道为啥，也不想解决了。。。</span>
+	<!-- <span style="font-size: 20rpx;color: red;">* 偶尔有时候不能用，不知道为啥，也不想解决了。。。</span> -->
     <div class="content">
       <h1 class="title">{{ bodyContent.title }}</h1>
       <p class="begin">{{ bodyContent.begin }}</p>
@@ -137,9 +137,9 @@ export default {
     };
   },
   onLoad() {
-	  uni.showShareMenu({
-	    menus: ["shareAppMessage", "shareTimeline"],
-	  }); //可分享
+	  // uni.showShareMenu({
+	  //   menus: ["shareAppMessage", "shareTimeline"],
+	  // }); //可分享
     this.create(this.value || this.placeholder, this.essayNum);
 	
   },

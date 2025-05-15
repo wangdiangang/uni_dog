@@ -196,9 +196,9 @@ export default {
 		};
 	},
 	onLoad() {
-		 uni.showShareMenu({
-			menus: ["shareAppMessage", "shareTimeline"],
-			}); //可分享
+		//  uni.showShareMenu({
+		// 	menus: ["shareAppMessage", "shareTimeline"],
+		// 	}); //可分享
 		const res = uni.getSystemInfoSync()
 		console.log(res.statusBarHeight);
 		this.statusBarHeight=res.statusBarHeight

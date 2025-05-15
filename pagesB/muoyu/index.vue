@@ -17,11 +17,13 @@ export default {
     },
     methods:{
         getzhichang(){
-            uniCloud
-				  .callFunction({
+			console.log('摸鱼');
+			// return
+            uniCloud.callFunction({
 				    name: "vvhan",
 				    data: {url:'moyu'},
 				  }).then(res=>{
+					  console.log('摸鱼',res);
                      this.url=res.result.url
                   })
         }
@@ -32,7 +34,7 @@ export default {
 .zhichang {
     /* padding: 30rpx; */
     width: 100%;
-    height: calc(100vh - 60rpx);
+    height: calc(100vh);
     background: #eee;
     display: flex;
     align-items: center;

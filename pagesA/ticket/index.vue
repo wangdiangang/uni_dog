@@ -1,8 +1,8 @@
 <template>
 	<div class="ticket">
 		<div class="two">
-	<h3>随机数</h3>
-			<div class="qiu" v-if="show">
+	<!-- <h3>随机数</h3> -->
+			<!-- <div class="qiu" v-if="show">
 				<span  class="span" v-for="i in 6" :key="i">
 					<span class="q_span"  :style="[transform]">
 						<span v-for="item in (32)" class="item" :key="item">
@@ -19,22 +19,22 @@
 						</span>
 					</span>
 				</span>
-			</div>
-			<div class="qiu" v-else>
+			</div> -->
+			<!-- <div class="qiu" v-else>
 				<span class="span" v-for="i in winArr" :key="i">
 					{{i}}
 				</span>
 				<span class="blue span">{{winBlue}}</span>
-			</div>
-			<div class="btn">
+			</div> -->
+			<!-- <div class="btn">
 				<button @click="begin">start</button>
 				<button @click="stop">stop</button>
-			</div>
+			</div> -->
 		</div>
 		<div class="line"></div>
 		<div class="big">
-			<h3>随机数</h3>
-			<div class="qiu" v-if='bigShow'>
+			<!-- <h3>随机数</h3> -->
+			<!-- <div class="qiu" v-if='bigShow'>
 				<span  class="span" v-for="i in winBigArr" :key="i">
 					<span class="q_span"  :style="[bigTransform]">
 						<span v-for="item in 35" class="item" :key="item">
@@ -79,11 +79,11 @@
 						</span>
 					</span>
 				</span>
-			</div>
-			<div class="btn">
+			</div> -->
+			<!-- <div class="btn">
 				<button @click="bigBegin">start</button>
 				<button @click="bigStop">stop</button>
-			</div>
+			</div> -->
 		</div>
 	</div>
 </template>

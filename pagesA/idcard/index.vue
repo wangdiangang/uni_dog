@@ -1,5 +1,5 @@
 <template>
-	<div class="idcard">
+	<!-- <div class="idcard">
 		<div class="title">身份证号码归属地查询</div>
 		<div class="query">
 			<input type="text" v-model.trim="idNumber" :placeholder="placeholder">
@@ -25,7 +25,7 @@
 				<span>{{nianling}}</span>
 			</div>
 		</div>
-	</div>
+	</div> -->
 </template>
 
 <script>

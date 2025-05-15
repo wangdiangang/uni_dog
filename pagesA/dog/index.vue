@@ -26,7 +26,7 @@
           <button id="createBtn" v-else>生成</button>
         </div>
       </div>
-	  <span style="font-size: 20rpx;color: red;">* 偶尔有时候不能用，不知道为啥，也不想解决了。。。</span>
+	  <!-- <span style="font-size: 20rpx;color: red;">* 偶尔有时候不能用，不知道为啥，也不想解决了。。。</span> -->
       <div id="wenzhang" :class="wenzhang">{{ paiban }}</div>
       <button @click="fuzhi" id="fuzhi" v-show="paiban">复制内容</button>
     </div>
@@ -218,33 +218,33 @@ let module = Math.pow(2, 32);
 
 let seed = down(take(0, module, Math.random));
 
-let 主题 = sentence(theme) || "";
-function 同余发生器() {
+let zhuti = sentence(theme) || "";
+function tongyufashengqi() {
   seed = (seed * multiplier + addend) % module;
   return seed / module;
 }
 
-function sentence(列表) {
-  let 坐标 = down(同余发生器() * 列表.length);
-  return 列表[坐标];
+function sentence(list) {
+  let zuobiao = down(tongyufashengqi() * list.length);
+  return list[zuobiao];
 }
 
-function take(最小值 = 0, 最大值 = 100, 随机数函数 = 同余发生器) {
-  let 数字 = 随机数函数() * (最大值 - 最小值) + 最小值;
-  return 数字;
+function take(min = 0, max = 100, suiji = tongyufashengqi) {
+  let num = suiji() * (max - min) + min;
+  return num;
 }
 
 function 来点论述() {
-  let 句子 = sentence(discuss);
-  句子 = 句子.replace(RegExp("主题", "g"), 主题);
-  return 句子;
+  let juzi = sentence(discuss);
+  juzi = juzi.replace(RegExp("主题", "g"), zhuti);
+  return juzi;
 }
 
-function 增加段落(段落) {
-  if (段落[段落.length - 1] === " ") {
-    段落 = 段落.slice(0, -2);
+function addduanluo(duanluo) {
+  if (duanluo[duanluo.length - 1] === " ") {
+    duanluo = duanluo.slice(0, -2);
   }
-  return "　　" + 段落 + "。 ";
+  return "　　" + duanluo + "。 ";
 }
 export default {
   data() {
@@ -268,7 +268,8 @@ export default {
     uni.showShareMenu({
       menus: ["shareAppMessage", "shareTimeline"],
     }); //可分享
-    this.getQuotes();
+    // this.getQuotes();
+	this.msgSecCheck()
   },
   methods: {
     msgSecCheck() {
@@ -287,7 +288,6 @@ export default {
           uni.getStorage({
             key: "token",
             success: (res) => {
-			console.log('准备走接口了');
               let token = res.data.token;
               uniCloud
                 .callFunction({
@@ -299,7 +299,7 @@ export default {
                   },
                 })
                 .then((res) => {
-                  console.log("获取到了不", res);
+                  // console.log("获取到了不", res);
                   if (res.result.data.result.label != 100) {
                     console.log("涉及暴力信息");
                     this.errorMsg = `${this.value}涉及到敏感词汇`;
@@ -309,10 +309,10 @@ export default {
                       this.loading = false;
                     }
                   } else {
-                    console.log("没事了");
-                   
+                    // console.log("没事了");
+                    this.create();
                   }
-				   this.create();
+				  
                 })
                 .catch((err) => {
                   if (this.loading) {
@@ -333,11 +333,12 @@ export default {
 			})
 			this.loading=true
 		}
-      uniCloud
-        .callFunction({
+		// return
+      uniCloud.callFunction({
           name: "getObj",
         })
         .then((res) => {
+			console.log(333,res);
           let data = res.result.data.map((item) => item.content).flat(1);
           this.quotesArr = data;
           this.create();
@@ -352,42 +353,43 @@ export default {
       });
     },
     laidianmingyan() {
-      let quotes = this.quotesArr.length ? this.quotesArr : quotes;
-      let 名言 = sentence(quotes);
-      名言 = 名言.replace("曾经说过", sentence(front));
-      名言 = 名言.replace("这不禁令我深思", sentence(cushion));
-      return 名言;
+      // let quotes = this.quotesArr.length ? this.quotesArr : quotes;
+      let mingyan = sentence(quotes);
+      mingyan = mingyan.replace("曾经说过", sentence(front));
+      mingyan = mingyan.replace("这不禁令我深思", sentence(cushion));
+      return mingyan;
     },
     create() {
+	
       this.wenzhang = "wenzhang_" + this.num;
       this.num += 1;
       if (this.num >= 5) this.num = 1;
-      主题 = this.value.slice(0, 50);
-      let 文章 = [];
-      let 段落 = "";
-      let 文章长度 = 0;
+      zhuti = this.value.slice(0, 50);
+      let wenzhang = [];
+      let duanluo = "";
+      let wenzhangchangdu = 0;
       let number = this.number;
       number = number / 1 || 400;
-      while (文章长度 < number) {
-        let 随机数 = take();
-        if (随机数 < 5 && 段落.length > 200) {
-          段落 = 增加段落(段落);
-          文章.push(段落);
-          段落 = "";
-        } else if (随机数 < 20) {
-          let 句子 = this.laidianmingyan();
-          文章长度 = 文章长度 + 句子.length;
-          段落 = 段落 + 句子;
+      while (wenzhangchangdu < number) {
+        let suijishu = take();
+        if (suijishu < 5 && duanluo.length > 200) {
+          duanluo = addduanluo(duanluo);
+          wenzhang.push(duanluo);
+          duanluo = "";
+        } else if (suijishu < 20) {
+          let juzi = this.laidianmingyan();
+          wenzhangchangdu = wenzhangchangdu + juzi.length;
+          duanluo = duanluo + juzi;
         } else {
-          let 句子 = 来点论述();
-          文章长度 = 文章长度 + 句子.length;
-          段落 = 段落 + 句子;
+          let juzi = 来点论述();
+          wenzhangchangdu = wenzhangchangdu + juzi.length;
+          duanluo = duanluo + juzi;
         }
       }
-      段落 = 增加段落(段落);
-      文章.push(段落);
+      duanluo = addduanluo(duanluo);
+      wenzhang.push(duanluo);
 
-      let paiban = 文章.join();
+      let paiban = wenzhang.join();
       this.paiban = paiban;
       setTimeout(() => {
         if (this.loading) {

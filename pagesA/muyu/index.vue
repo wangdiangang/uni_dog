@@ -128,6 +128,9 @@ export default {
     };
   },
   onLoad() {
+	  uni.showShareMenu({
+	    menus: ["shareAppMessage", "shareTimeline"],
+	  }); //可分享
     this.saveKnock();
     
     this.onLoadClone3389();
