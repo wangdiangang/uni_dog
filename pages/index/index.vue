@@ -22,7 +22,7 @@
 					<text>文章生成器</text>
 				</view>
 				
-				<view @click="next('chat','B')" class="kuai box">
+				<view @click="nextChat()" class="kuai box">
 					<text>AI 问答</text>
 				</view>
 				<view @click="next('muoyu','B')" class="kuai box">
@@ -81,6 +81,7 @@
 		},
 		data() {
 			return {
+				isChatPage:false,
 				code: "", //临时登录code
 				openid: "",
 				token: "",
@@ -92,7 +93,7 @@
 			//    this.getToken();
 			// this.getOpenId()
 			this.getLocation();
-
+			this.getChatPage()
 			uni.showShareMenu({
 				menus: ["shareAppMessage", "shareTimeline"],
 			}); //可分享
@@ -136,6 +137,18 @@
 			});
 		},
 		methods: {
+			getChatPage(){
+				uniCloud.callFunction({
+					name:"getChatPage",
+					data:{}
+				}).then(res=>{
+
+					let data=res.result.data[0]
+					
+					this.isChatPage=data.chatPage
+					// console.log(2222,this.isChatPage);
+				})
+			},
 			getLocation() {
 				console.log("定位获取");
 				uniCloud
@@ -159,6 +172,20 @@
 				uni.navigateTo({
 					url: `/${page?'pagesB':'pagesA'}/${n}/index`,
 				});
+			},
+			nextChat(){
+				if (this.loading) return;
+				console.log(this.isChatPage);
+				if(this.isChatPage){
+					uni.navigateTo({
+					url: '/pagesB/chat/index',
+				});
+				}else{
+					uni.navigateTo({
+					url: '/pagesB/chatAi/index',
+				});
+				}
+				
 			},
 			getOpenId(code) {
 				//获取openid
